@@ -14,8 +14,8 @@ class SJF:
     def todo(self):
         for i in range(self._number):
             templist = []
-            comeTime = float(input("请输入第" + str(i) + "个作业的到达时间\t"))
-            serverTime = float(input("请输入第" + str(i) + "个作业的服务时间\t"))
+            comeTime = float(input("请输入第" + str(i+1) + "个作业的到达时间\t"))
+            serverTime = float(input("请输入第" + str(i+1) + "个作业的服务时间\t"))
             templist.extend([comeTime, serverTime])
             self._myList.append(templist)
         for i in range(self._number):
@@ -27,8 +27,8 @@ class SJF:
                 temp = self._myList[i]
                 self._myList[i] = self._myList[k]
                 self._myList[k] = temp
-        print("选则排序")
-        print(self._myList)
+        #print("选则排序")
+        #print(self._myList)
         comeTime = self._myList[0][0]
         serverTime = self._myList[0][1]
         beginTime = comeTime
@@ -46,13 +46,12 @@ class SJF:
             turnoverTime = finishTime - comeTime
             weightedTurnoverTime = turnoverTime / serverTime
             self._myList[i].extend([beginTime, finishTime, turnoverTime, weightedTurnoverTime])
-        print(self._myList)
-        print('作业\t\t' + '到达时间\t\t' + '服务时间\t\t' + '开始时间\\tt' + '完成时间\\tt' + '周转时间\t\t' + '带权周转时间\\tt')
+        #print(self._myList)
+        print('作业\t\t' + '到达时间\t' + '服务时间\t' + '开始时间\t' + '完成时间\t' + '周转时间\t' + '带权周转时间\t')
         for i in range(self._number):
-            print(str(i+1) + '\t\t' + str(self._myList[i][0]) + '\t\t' + str(self._myList[i][1]) + '\t\t' + str(
-            self._myList[i][2]) + '\t\t' + str(self._myList[i][3]) + '\t\t' + str(self._myList[i][4]) + '\t\t' + str(
-            self._myList[i][5]) + '\t\t')
-
+            print(str(i+1) + '\t\t' + str(round(self._myList[i][0],2)) + '\t\t' + str(round(self._myList[i][1],2)) + '\t\t' + str(round(
+            self._myList[i][2],2)) + '\t\t' + str(round(self._myList[i][3],2)) + '\t\t' + str(round(self._myList[i][4],2)) + '\t\t' + str(
+            round(self._myList[i][5],2)) + '\t\t')
 
 x=SJF()
 x.todo()
