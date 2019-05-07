@@ -55,7 +55,15 @@ class FCFS:
             print(str(i+1) + '\t\t' + str(round(self._myList[i][0], 2)) + '\t\t' + str(round(self._myList[i][1], 2)) + '\t\t' + str(round(
                 self._myList[i][2], 2)) + '\t\t' + str(round(self._myList[i][3], 2)) + '\t\t' + str(round(self._myList[i][4], 2)) + '\t\t' + str(
                 round(self._myList[i][5], 2)) + '\t\t')
-
+        sumT=0
+        sumW=0
+        for i in range(self._number):
+            sumT+=self._myList[i][4]
+            sumW+=self._myList[i][5]
+        print("平均周转时间")
+        print(round(sumT/self._number,2))
+        print("平均带权周转时间")
+        print(round(sumW/self._number,2))
 
 x = FCFS()
 x.todo()
