@@ -9,7 +9,7 @@ client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 # AF_INET: use stander IPv4 or host
 # SOCK_STREAM: this is a tcp client
 
-# connect client-site(客户端)
+# connect client-site
 client.connect((target_host, target_post))
 # send some data
 client.send("GET / HTTP/1.1\r\nHost: google.com\r\n\r\n")
