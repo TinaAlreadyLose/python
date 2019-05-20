@@ -16,16 +16,20 @@ class Bankers_Algorithm:
     # 初始化所有数据化
     def __init__(self):
         allavailable = [5, 6, 8, 6, 4]
-        allocation = [[0, 2, 1, 1, 1], [2, 0, 1, 1, 1], [0, 1, 0, 1, 1], [0, 3, 1, 2, 0]]
-        need = [[1, 0, 2, 1, 1], [0, 3, 2, 1, 0], [0, 3, 3, 2, 2], [1, 0, 1, 2, 1]]
+        allocation = [[0, 2, 1, 1, 1], [2, 0, 1, 1, 1],
+                      [0, 1, 0, 1, 1], [0, 3, 1, 2, 0]]
+        need = [[1, 0, 2, 1, 1], [0, 3, 2, 1, 0],
+                [0, 3, 3, 2, 2], [1, 0, 1, 2, 1]]
         available = [0, 0, 0, 0, 0]
-        max = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+        max = [[0, 0, 0, 0, 0], [0, 0, 0, 0, 0],
+               [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
         work = [0, 0, 0, 0, 0]
         temp = [0, 0, 0, 0, 0]
         for i in range(self._processes):
             for j in range(self._types):
                 temp[j] += allocation[i][j]
-                max[i][j] = allocation[i][j] + need[i][j]  # 银行家之间算法的关系：Need[i, j]=Max[i, j]-Allocation[i, j]
+                # 银行家之间算法的关系：Need[i, j]=Max[i, j]-Allocation[i, j]
+                max[i][j] = allocation[i][j] + need[i][j]
         for i in range(self._types):
             available[i] = allavailable[i] - temp[i]
         self._allavailable = allavailable
@@ -48,6 +52,8 @@ class Bankers_Algorithm:
 
     # 外部调用
     def toWork(self):
+        # 
+        # print(self._max)
         # self._printAll()
         # 是否符合银行家算法的规范
         if not self._brank():
@@ -61,11 +67,11 @@ class Bankers_Algorithm:
 
     # todo 实现银行家算法，符合返回true，反之false
     def _brank(self):
-        # request = [1, 0, 0, 0, 1]
-        request = []
-        for i in range(self._types):
-            a = int(input("请输入request" + str(i) + "值:  "))
-            request.append(a)
+        request = [1, 0, 0, 0, 1]
+        # request = []
+        # for i in range(self._types):
+        #     a = int(input("请输入request" + str(i) + "值:  "))
+        #     request.append(a)
         # 1）如果Request i[j]≤Need[i, j]，转向步骤（2）；否则所需资源数已超过它所宣布的最大值。
         if not self._requestSmall(request, self._need[self._useProcess]):
             return False
@@ -74,13 +80,14 @@ class Bankers_Algorithm:
             if not self._requestSmall(request, self._available):
                 return False
             else:
-                '''系统试探着把资源分配给进程Pi，并修改下面数据结构中的数值：
-　　　　Available[j]=Available[j]-Requesti[j]；
-　　　　Allocation[i, j]=Allocation[i, j]+Requesti[j]；
-　　　　Need[i, j]=Need[i, j]-Requesti[j]；'''
+                # 系统试探着把资源分配给进程Pi，并修改下面数据结构中的数值：
+                # Allocation[i, j]=Allocation[i, j]+Requesti[j]；
+                # Need[i, j]=Need[i, j]-Requesti[j]；
                 self._available = self._subtraction(self._available, request)
-                self._need[self._useProcess] = self._subtraction(self._need[self._useProcess], request)
-                self._allocation[self._useProcess] = self._add(self._allocation[self._useProcess], request)
+                self._need[self._useProcess] = self._subtraction(
+                    self._need[self._useProcess], request)
+                self._allocation[self._useProcess] = self._add(
+                    self._allocation[self._useProcess], request)
                 print('修改可利用资源向量为：' + str(self._available))
                 print('修改需求矩阵为：' + str(self._need[self._useProcess]))
                 print('修改分配矩阵为：' + str(self._allocation[self._useProcess]))
@@ -102,6 +109,10 @@ class Bankers_Algorithm:
                             count += 1
                             # print(self._work)
                             # print(i)
+                            print(
+                                '进程号\tWord\t\tNeed\t\tAllocation\tWork+Allocation\tFinish')
+                            print(str(i)+'\t'+str(self._subtraction(self._work, self._allocation[i]))+'\t'+str(
+                                self._need[i])+'\t'+str(self._allocation[i])+'\t'+str(self._work)+'\t'+str(self._finish[i]))
                             flag = True
                             self._SecuredSequence.append(i)  # 记录安全序列的值
                     else:
@@ -113,6 +124,8 @@ class Bankers_Algorithm:
                             flag = True
                             # print(self._work)
                             # print(i)
+                            print(str(i)+'\t'+str(self._subtraction(self._work, self._allocation[i]))+'\t'+str(
+                                self._need[i])+'\t'+str(self._allocation[i])+'\t'+str(self._work)+'\t'+str(self._finish[i]))
                             self._SecuredSequence.append(i)  # 记录安全序列的值
             if not flag:
                 return False
