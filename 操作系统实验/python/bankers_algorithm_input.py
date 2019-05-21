@@ -1,7 +1,7 @@
 class Bankers_Algorithm:
     _count = 0
-    _processes = 4  # 进程数
-    _types = 5  # 资源种类
+    _processes = 0  # 进程数
+    _types = 0  # 资源种类
     _SecuredSequence = []  # 安全序列
     _useProcess = 0 # 请求进程
     _allavailable = None  # 五种种资源的数量
